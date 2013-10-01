@@ -57,7 +57,7 @@ public class Main {
     }
 
     private static void createHttpServer() {
-        httpServer = new Server(8080);
+        httpServer = new Server(Environment.getConfiguration().getPortHttp());
 
         WebAppContext webAppContext = new WebAppContext();
         webAppContext.setContextPath("/");
@@ -72,7 +72,7 @@ public class Main {
     }
 
     private static void createShutdownServer() {
-        shutdownServer = new Server(33221);
+        shutdownServer = new Server(Environment.getConfiguration().getPortShutdown());
         shutdownServer.setHandler(new AbstractHandler() {
             @Override
             public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

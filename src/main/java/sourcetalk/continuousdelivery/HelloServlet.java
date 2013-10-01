@@ -20,14 +20,20 @@ public class HelloServlet extends HttpServlet {
             return;
         }
 
+        String version = new Scanner(getClass().getClassLoader().getResourceAsStream("version.txt"), "UTF-8").next();
+        String titleColor = Environment.getConfiguration().getTitleColor();
+        String hostName = InetAddress.getLocalHost().getHostName();
+
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<html>" +
                 "<head><meta charset=\"utf-8\"></head>" +
                 "<body>" +
-                "<h1>Hello " + htmlEscape(user) + "!</h1>" +
-                "<p>I am a test application and I run on server '" + InetAddress.getLocalHost().getHostName() + "'</p>" +
-                "<p>My version is: " + new Scanner(getClass().getClassLoader().getResourceAsStream("version.txt"), "UTF-8").next() + "</p>" +
+                "<h1 style=\"color:" + titleColor + "\">" +
+                "Hello " + htmlEscape(user) + "!" +
+                "</h1>" +
+                "<p>I am a test application and I run on server '" + hostName + "' in the '" +Environment.getName() +"' environment.</p>" +
+                "<p>My version is: " + version + "</p>" +
                 "<p>These are my friends:</p>" +
                 "<table>" +
                 "<thead>" +

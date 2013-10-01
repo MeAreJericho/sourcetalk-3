@@ -9,7 +9,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.w3c.dom.html.HTMLInputElement;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -29,13 +28,14 @@ public class IntegrationTest {
     public void addFriend() throws Exception {
         WebClient webClient = new WebClient(BrowserVersion.INTERNET_EXPLORER_9);
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-        HtmlPage page = webClient.getPage("http://localhost:8080");
+        HtmlPage page = webClient.getPage("http://localhost:" + Environment.getConfiguration().getPortHttp());
         assertTrue(page.asText().contains("Welcome to SourceTalk!"));
 
         ((HtmlTextInput) page.getElementByName("user")).setValueAttribute("Otto");
         page = ((HtmlSubmitInput) page.getElementByName("start")).click();
 
         assertTrue(page.asText().contains("Hello Otto!"));
+        assertTrue(page.asText().contains("'unittest' environment"));
         assertTrue(page.asText().contains("Homer"));
         assertFalse(page.asText().contains("Bart"));
 
